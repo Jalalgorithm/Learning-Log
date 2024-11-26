@@ -30,10 +30,12 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+LOGIN_REDIRECT_URL='learning_logs:index'
 INSTALLED_APPS = [
     
     #My apps
     'learning_logs',
+    'accounts',
     
     # Default Django apps
     'django.contrib.admin',
