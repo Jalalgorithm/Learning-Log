@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 LOGIN_REDIRECT_URL='learning_logs:index'
+LOGOUT_REDIRECT_URL='learning_logs:index'
 INSTALLED_APPS = [
     
     #My apps
