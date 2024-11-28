@@ -1,10 +1,82 @@
-{% extends "learning_logs/base.html"%} {% block content %}
+{% extends "learning_logs/base.html" %} {% block page_header %}
+<div class="p-3 mb-4 bg-light border rounded-3 shadow-sm">
+  <div class="container-fluid py-5 text-center">
+    <h1 class="display-3 fw-bold text-primary">Track Your Learning.</h1>
+    <p class="lead text-muted mt-3">
+      Create your personal Learning Log to stay on top of the topics you're
+      exploring. Log what you learn, and build a repository of your knowledge!
+    </p>
+    <a
+      class="btn btn-primary btn-lg px-4 py-2 rounded-pill shadow-sm mt-3"
+      href="{% url 'accounts:register' %}"
+    >
+      Register Now &raquo;
+    </a>
+  </div>
+</div>
+{% endblock page_header %} {% block content %}
+<div class="container my-5">
+  <div class="row text-center g-4">
+    <!-- Feature 1 -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="icon mb-3 text-primary">
+            <i class="bi bi-journal-check fs-1"></i>
+          </div>
+          <h5 class="card-title fw-bold">Organized Topics</h5>
+          <p class="card-text text-muted">
+            Keep all your learning topics neatly organized and easily
+            accessible.
+          </p>
+        </div>
+      </div>
+    </div>
 
-<p>Learning Log</p>
+    <!-- Feature 2 -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="icon mb-3 text-success">
+            <i class="bi bi-pencil-square fs-1"></i>
+          </div>
+          <h5 class="card-title fw-bold">Quick Entries</h5>
+          <p class="card-text text-muted">
+            Add new entries in seconds and summarize your latest discoveries.
+          </p>
+        </div>
+      </div>
+    </div>
 
-<p>
-  Learning logs helps you to keep track of your learning , for any topic you're
-  learning about
-</p>
+    <!-- Feature 3 -->
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <div class="icon mb-3 text-danger">
+            <i class="bi bi-graph-up-arrow fs-1"></i>
+          </div>
+          <h5 class="card-title fw-bold">Track Progress</h5>
+          <p class="card-text text-muted">
+            Monitor your learning journey and measure how far you've come.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-{%endblock content %}
+<div class="container my-5 text-center">
+  <div class="bg-primary text-white py-5 px-3 rounded-3 shadow">
+    <h2 class="fw-bold">Ready to Level Up?</h2>
+    <p class="lead mt-2">
+      Join now and take control of your learning experience.
+    </p>
+    <a
+      class="btn btn-light btn-lg px-4 py-2 rounded-pill mt-3"
+      href="{% url 'accounts:register' %}"
+    >
+      Get Started &raquo;
+    </a>
+  </div>
+</div>
+{% endblock content %}

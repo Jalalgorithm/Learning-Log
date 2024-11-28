@@ -1,15 +1,107 @@
-{% extends 'learning_logs/base.html'%} {% block content%}
+{% extends 'learning_logs/base.html' %} {% block content %}
+<div class="container py-5">
+  <!-- Page Header -->
+  <div class="text-center mb-4">
+    <h2 class="display-5 fw-bold text-warning">Edit Entry</h2>
+    <p class="text-muted">
+      Update your learning log entry for <strong>{{ topic }}</strong>.
+    </p>
+  </div>
 
-<p>
-  <a href="{% url 'learning_logs:topic' topic.id %}">{{topic}}</a>
-</p>
+  <!-- Form Card -->
+  <div
+    class="card shadow-sm mx-auto"
+    style="max-width: 700px; border-radius: 15px"
+  >
+    <div class="card-body p-4">
+      <p>
+        <a
+          href="{% url 'learning_logs:topic' topic.id %}"
+          class="btn btn-outline-secondary rounded-pill"
+        >
+          <i class="bi bi-arrow-left-circle"></i> Back to {{ topic }}
+        </a>
+      </p>
 
-<p>Edit entry:</p>
+      <form
+        id="edit-entry-form"
+        action="{% url 'learning_logs:edit_entry' entry.id %}"
+        method="post"
+      >
+        {% csrf_token %}
+        <!-- Form Fields -->
+        <div class="mb-3">{{ form.as_div }}</div>
 
-<form action="{% url 'learning_logs:edit_entry' entry.id %}" method="post">
-  {%csrf_token%} {{form.as_div}}
+        <!-- Save Changes Button -->
+        <div class="d-flex justify-content-end">
+          <button
+            id="save-btn"
+            type="button"
+            class="btn btn-warning shadow rounded-pill px-4 py-2"
+          >
+            <i class="bi bi-save"></i> Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-  <button name="submit">Save Changes</button>
-</form>
+<!-- SweetAlert Confirmation -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  document.getElementById("save-btn").addEventListener("click", function () {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to save these changes?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ffc107",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Yes, save it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById("edit-entry-form").submit();
+      }
+    });
+  });
+</script>
 
-{%endblock content%}
+<!-- Styling -->
+<style>
+  body {
+    background-color: #f8f9fa;
+  }
+  .card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  button {
+    transition: transform 0.2s ease-in-out;
+  }
+  button:hover {
+    transform: scale(1.05);
+  }
+  .text-warning {
+    color: #ffc107;
+  }
+  .text-muted {
+    color: #6c757d;
+  }
+</style>
+
+<!-- Animation -->
+<style>
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>
+{% endblock content %}

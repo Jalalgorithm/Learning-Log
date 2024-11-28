@@ -1,13 +1,59 @@
-{% extends 'learning_logs/base.html'%} {% block content%} {% if form.errors%}
+{% extends 'learning_logs/base.html' %} {% load django_bootstrap5 %}
+<div class="text-center mt-4">
+  <h2 class="fw-bold text-primary">Log In to Your Account</h2>
+  <p class="text-muted">
+    Access your learning log and continue tracking your progress.
+  </p>
+</div>
+{% block content %}
+<div
+  class="container d-flex justify-content-center align-items-center"
+  style="min-height: 70vh"
+>
+  <div
+    class="card shadow-lg p-4 border-0 rounded-3"
+    style="max-width: 400px; width: 100%"
+  >
+    <div class="text-center mb-4">
+      <i class="bi bi-person-circle text-primary" style="font-size: 4rem"></i>
+    </div>
+    <form action="{% url 'accounts:login' %}" method="post" id="loginForm">
+      {% csrf_token %}
+      <div class="mb-3">{% bootstrap_form form %}</div>
+      <button
+        type="submit"
+        class="btn btn-primary btn-lg rounded-pill shadow-sm w-100"
+      >
+        Log In
+      </button>
+    </form>
+    <div class="text-center mt-3">
+      <p class="text-muted">
+        Don't have an account?
+        <a href="{% url 'accounts:register' %}" class="text-primary"
+          >Register here</a
+        >.
+      </p>
+    </div>
+  </div>
+</div>
 
-<p>Your username and password didnt match . Please try again</p>
+<!-- SweetAlert for Success/Error Messages -->
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent default submission for demonstration purposes
 
-{%endif %}
-
-<form action="{% url 'accounts:login'%}" method="post">
-  {%csrf_token%} {{form.as_div}}
-
-  <button name="submit">Log in</button>
-</form>
-
-{%endblock content%}
+    // Example SweetAlert for successful login
+    Swal.fire({
+      title: "Logging In...",
+      text: "Please wait while we verify your details.",
+      icon: "info",
+      showConfirmButton: false,
+      timer: 2000,
+      willClose: () => {
+        this.submit(); // Submit the form after the SweetAlert closes
+      },
+    });
+  });
+</script>
+{% endblock content %}

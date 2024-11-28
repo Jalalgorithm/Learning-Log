@@ -1,26 +1,92 @@
-{% extends 'learning_logs/base.html' %} {% block content %}
+{% extends 'learning_logs/base.html' %}
 
-<p>Topic: {{topic.text}}</p>
+{% block page_header %}
+<div class="text-center my-4">
+  <h1 class="display-4 fw-bold text-primary">{{ topic.text }}</h1>
+  <p class="text-muted">Explore and manage your entries for this topic.</p>
+</div>
+{% endblock page_header %}
 
-<p>Entries :</p>
+{% block content %}
+<div class="container">
+  <div class="text-end mb-3">
+    <a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn btn-primary shadow-sm rounded-pill">Add New Entry</a>
+  </div>
 
-<p>
-  <a href="{% url 'learning_logs:new_entry' topic.id%}"> Add a new Entry</a>
-</p>
+  <div class="timeline">
+    {% for entry in entries %}
+    <div class="timeline-item mb-5">
+      <!-- Entry Card -->
+      <div class="card border-0 shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <span>{{ entry.date_added|date:'M d, Y H:i' }}</span>
+          <a href="{% url 'learning_logs:edit_entry' entry.id %}" class="btn btn-sm btn-light text-primary">Edit Entry</a>
+        </div>
+        <div class="card-body">
+          <p class="mb-0">{{ entry.text|linebreaks }}</p>
+        </div>
+      </div>
+    </div>
 
-<ul>
-  {% for entry in entries%}
-  <li>
-    <p>{{entry.date_added |date:'M d, Y H:i' }}</p>
-    <p>{{entry.text|linebreaks}}</p>
-    <p>
-      <a href="{%url 'learning_logs:edit_entry' entry.id %}"> Edit Entry</a>
-    </p>
-  </li>
-  {% empty%}
-  <li>They are not entries for this topic yet</li>
+    <!-- Line connector -->
+    {% if not forloop.last %}
+    <div class="timeline-connector">
+      <div class="line"></div>
+    </div>
+    {% endif %}
+    {% empty %}
+    <p class="text-muted text-center">There are no entries for this topic yet.</p>
+    {% endfor %}
+  </div>
+</div>
 
-  {%endfor%}
-</ul>
-
-{% endblock content%}
+<!-- Timeline Styles -->
+<style>
+  .timeline {
+    position: relative;
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px 0;
+  }
+  .timeline-item {
+    position: relative;
+  }
+  .timeline-connector {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -15px;
+    margin-bottom: 15px;
+  }
+  .line {
+    width: 2px;
+    height: 50px;
+    background-color: #007bff;
+  }
+  .card {
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  .btn:hover {
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+  }
+  .timeline-item {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
+</style>
+</div>
+{% endblock content %}
